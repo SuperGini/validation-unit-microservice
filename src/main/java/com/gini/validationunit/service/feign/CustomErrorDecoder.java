@@ -7,6 +7,7 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,9 +19,9 @@ public record CustomErrorDecoder(ObjectMapper objectMapper) implements ErrorDeco
 
     @Override
     public Exception decode(String methodKey, Response response) {
+        HttpStatus httpStatus =  HttpStatus.valueOf(response.status());
 
-        if (response.status() >= 400 && response.status() <= 499) {
-
+        if (httpStatus.is4xxClientError()) {
             try {
                 String errorMessage = IOUtils.toString(response.body().asInputStream(), String.valueOf(StandardCharsets.UTF_8));
 
@@ -30,11 +31,11 @@ public record CustomErrorDecoder(ObjectMapper objectMapper) implements ErrorDeco
                 throw clientException;
             } catch (IOException e) {
                 log.error("Error reading client error message from inventory: ", e);
+                //:todo -> throw exception and shit
             }
-
         }
-        if (response.status() >= 500 && response.status() <= 599) {
 
+        if (httpStatus.is5xxServerError()) {
             try {
                 String errorMessage = IOUtils.toString(response.body().asInputStream(), String.valueOf(StandardCharsets.UTF_8));
 
@@ -43,11 +44,11 @@ public record CustomErrorDecoder(ObjectMapper objectMapper) implements ErrorDeco
 
                 return serverException;
             } catch (IOException e) {
-                log.error("Error reading server error message from inventory: ");
+                log.error("Error reading server error message from inventory: ", e);
+                //:todo -> throw exception and shit
             }
         }
+
         return errorStatus(methodKey, response);
-
     }
-
 }
