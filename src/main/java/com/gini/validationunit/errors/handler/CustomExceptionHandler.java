@@ -1,21 +1,32 @@
 package com.gini.validationunit.errors.handler;
 
 
+import com.gini.validationunit.errors.ErrorCode;
+import com.gini.validationunit.errors.ErrorResponse;
 import com.gini.validationunit.errors.exception.InventoryClientException;
 import com.gini.validationunit.errors.exception.InventoryServerException;
 import com.gini.validationunit.errors.response.RestErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Slf4j
 @RestControllerAdvice
-public class FeignExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         //i keep this method because is gooooooooooooooooooooood:D!!!!!
 //    @ExceptionHandler(FeignException.BadRequest.class)
@@ -46,5 +57,42 @@ public class FeignExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getStatus()));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+
+        List<ErrorResponse> errors = new ArrayList<>();
+
+        ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .filter(distinctByKey(p -> p.getField()))
+                .forEach( error -> addErrorToErrorsList(errors, error));
+
+
+        var restResponse = new RestErrorResponse(
+                ErrorCode.VALIDATION_ERROR.toString(),
+                ErrorCode.VALIDATION_ERROR.getMessage(),
+                errors
+        );
+
+        return ResponseEntity.badRequest().body(restResponse);
+    }
+
+    private void addErrorToErrorsList(List<ErrorResponse> errors, FieldError x) {
+        String field = x.getField();
+        String message = x.getDefaultMessage();
+        ErrorResponse errorResponse = new ErrorResponse(field, message);
+        errors.add(errorResponse);
+    }
+
+   //todo: https://stackoverflow.com/questions/23699371/java-8-distinct-by-property
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        final Set<Object> seen = new HashSet<>();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 }

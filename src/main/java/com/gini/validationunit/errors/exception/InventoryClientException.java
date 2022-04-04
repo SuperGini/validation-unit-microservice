@@ -2,6 +2,7 @@ package com.gini.validationunit.errors.exception;
 
 
 
+import com.gini.validationunit.errors.ErrorResponse;
 import com.gini.validationunit.errors.response.InventoryErrorFields;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,6 @@ public class InventoryClientException extends RuntimeException {
     private int status;
     private String errorCode;
     private String errorMessage;
-    private List<InventoryErrorFields> errors = new ArrayList<>();
+    private List<ErrorResponse> errors = new ArrayList<>();
 
 }

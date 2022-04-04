@@ -1,22 +1,37 @@
 package com.gini.validationunit.dto.request;
 
 
+import com.gini.validationunit.validation.annotation.ValidPartCount;
+import com.gini.validationunit.validation.order.FirstValidation;
+import com.gini.validationunit.validation.order.SecondValidation;
+import com.gini.validationunit.validation.order.ThirdValidation;
 import lombok.Data;
 
+import javax.validation.GroupSequence;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
+@GroupSequence({
+                PartRequest.class,
+                FirstValidation.class,
+                SecondValidation.class,
+                ThirdValidation.class})
 @Data
 public class PartRequest {
 
-    @NotNull
+    @NotNull(groups = FirstValidation.class)
+    @NotEmpty(groups = SecondValidation.class)
+    @NotBlank(groups = ThirdValidation.class)
     private String partName;
 
     @NotNull
 
     private String partNumber;
 
-   // @ValidPartCount
+    @ValidPartCount
     private String partCount;
 
     @NotNull
