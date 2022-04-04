@@ -39,6 +39,7 @@ public class PartRequest {
     @Valid //to validate the fields inside nested object we need this annotation. Otherwise it doesn't work.
     private PriceRequest partPrice;
 
+    @Valid
     private CarModelRequest carModel;
 
     @NotNullEmptyOrBlank
