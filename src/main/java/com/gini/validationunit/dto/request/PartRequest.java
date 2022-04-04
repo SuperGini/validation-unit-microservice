@@ -1,6 +1,7 @@
 package com.gini.validationunit.dto.request;
 
 
+import com.gini.validationunit.validation.annotation.NotNullEmptyOrBlank;
 import com.gini.validationunit.validation.annotation.ValidPartCount;
 import com.gini.validationunit.validation.order.FirstValidation;
 import com.gini.validationunit.validation.order.SecondValidation;
@@ -12,13 +13,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @GroupSequence({
-                PartRequest.class,
-                FirstValidation.class,
-                SecondValidation.class,
-                ThirdValidation.class})
+        PartRequest.class,
+        FirstValidation.class,
+        SecondValidation.class,
+        ThirdValidation.class})
 @Data
 public class PartRequest {
 
@@ -27,8 +27,9 @@ public class PartRequest {
     @NotBlank(groups = ThirdValidation.class)
     private String partName;
 
-    @NotNull
-
+    @NotNull(groups = FirstValidation.class)
+    @NotEmpty(groups = SecondValidation.class)
+    @NotBlank(groups = ThirdValidation.class)
     private String partNumber;
 
     @ValidPartCount
@@ -40,8 +41,10 @@ public class PartRequest {
 
     private CarModelRequest carModel;
 
-    @NotNull
+    @NotNullEmptyOrBlank
     private String suplayerName;
+
+    @NotNullEmptyOrBlank
     private String manufacturer;
 
 }

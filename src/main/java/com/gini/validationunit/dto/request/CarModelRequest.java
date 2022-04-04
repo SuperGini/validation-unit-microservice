@@ -1,6 +1,7 @@
 package com.gini.validationunit.dto.request;
 
 
+import com.gini.validationunit.validation.annotation.NotNullEmptyOrBlank;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -8,10 +9,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CarModelRequest {
 
-    @NotNull
+    @NotNullEmptyOrBlank
     private String constructor;
 
-    @NotNull
+    @NotNullEmptyOrBlank
     private String model;
 
     private String year;
