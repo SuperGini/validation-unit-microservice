@@ -1,6 +1,8 @@
 package com.gini.validationunit.controllers;
 
 import com.gini.validationunit.dto.request.PartRequest;
+import com.gini.validationunit.dto.request.UpdatePartRequest;
+import com.gini.validationunit.dto.response.FindPartWithCurrencyResponse;
 import com.gini.validationunit.dto.response.ListPartsResponse;
 import com.gini.validationunit.dto.response.PartResponse;
 import com.gini.validationunit.service.PartService;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,19 +22,20 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v3")
+@RequestMapping("/v1")
 public class PartController {
 
     private final PartService partService;
 
 
     @PostMapping("/parts")
-    public ResponseEntity<PartResponse> createPart(@Valid  @RequestBody PartRequest partRequest) {
+    public ResponseEntity<PartResponse> createPart(@Valid @RequestBody PartRequest partRequest) {
 
         PartResponse response = partService.createPart(partRequest);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
     @GetMapping("/parts/{pageNumber}")
     public ResponseEntity<List<ListPartsResponse>> findAllPartsWithPagination(@PathVariable String pageNumber) {
@@ -47,8 +51,21 @@ public class PartController {
         Integer partCount = partService.findPartsCount();
 
         return new ResponseEntity<>(partCount, HttpStatus.OK);
-
     }
 
 
+    @PutMapping("/parts")
+    public ResponseEntity<?> updatePart(@RequestBody UpdatePartRequest updatePartRequest) {
+        Integer ok = partService.updatePart(updatePartRequest);
+        return ResponseEntity.ok().body(ok);
+    }
+
+
+    @GetMapping("/parts/part/{partNumber}")
+    public ResponseEntity<FindPartWithCurrencyResponse> findPartByPartNumber(@PathVariable String partNumber) {
+        return ResponseEntity
+                .ok()
+                .body(partService.findPartByPartNumber(partNumber));
+
+    }
 }
