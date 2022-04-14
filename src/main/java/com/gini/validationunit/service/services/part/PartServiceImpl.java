@@ -1,10 +1,10 @@
-package com.gini.validationunit.service.services;
+package com.gini.validationunit.service.services.part;
 
-import com.gini.validationunit.dto.request.PartRequest;
-import com.gini.validationunit.dto.request.UpdatePartRequest;
-import com.gini.validationunit.dto.response.FindPartWithCurrencyResponse;
-import com.gini.validationunit.dto.response.ListPartsResponse;
-import com.gini.validationunit.dto.response.PartResponse;
+import com.gini.validationunit.dto.request.part.PartRequest;
+import com.gini.validationunit.dto.request.part.UpdatePartRequest;
+import com.gini.validationunit.dto.response.part.FindPartWithCurrencyResponse;
+import com.gini.validationunit.dto.response.part.ListPartsResponse;
+import com.gini.validationunit.dto.response.part.PartResponse;
 import com.gini.validationunit.service.PartService;
 import com.gini.validationunit.service.feign.FeignClientCentralUnit;
 import lombok.RequiredArgsConstructor;

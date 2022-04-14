@@ -1,4 +1,4 @@
-package com.gini.validationunit.dto.request;
+package com.gini.validationunit.dto.request.part;
 
 import lombok.Data;
 

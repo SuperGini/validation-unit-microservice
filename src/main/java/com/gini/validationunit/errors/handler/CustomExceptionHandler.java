@@ -5,6 +5,8 @@ import com.gini.validationunit.errors.ErrorCode;
 import com.gini.validationunit.errors.ErrorResponse;
 import com.gini.validationunit.errors.exception.InventoryClientException;
 import com.gini.validationunit.errors.exception.InventoryServerException;
+import com.gini.validationunit.errors.exception.UserAlreadyExistsException;
+import com.gini.validationunit.errors.exception.UserNotFoundException;
 import com.gini.validationunit.errors.response.RestErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -59,6 +61,31 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getStatus()));
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<RestErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException e){
+        log.error("Error user already exists: ", e);
+        RestErrorResponse response = new RestErrorResponse(
+                ErrorCode.USER_ALREADY_EXISTS.toString(),
+                ErrorCode.USER_ALREADY_EXISTS.getMessage(),
+                List.of()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<RestErrorResponse> handleUserNotFoundException(UserNotFoundException e){
+        log.error("Error user already exists: ", e);
+        RestErrorResponse response = new RestErrorResponse(
+                ErrorCode.USER_NOT_FOUND.toString(),
+                ErrorCode.USER_NOT_FOUND.getMessage(),
+                List.of()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
@@ -82,6 +109,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.badRequest().body(restResponse);
     }
+
 
     private void addErrorToErrorsList(List<ErrorResponse> errors, FieldError x) {
         String field = x.getField();

@@ -1,6 +1,6 @@
 package com.gini.validationunit.validation.validators;
 
-import com.gini.validationunit.dto.request.PriceRequest;
+import com.gini.validationunit.dto.request.part.PriceRequest;
 import com.gini.validationunit.validation.annotation.ValidPrice;
 import com.gini.validationunit.validation.utility.AcceptedCurrency;
 

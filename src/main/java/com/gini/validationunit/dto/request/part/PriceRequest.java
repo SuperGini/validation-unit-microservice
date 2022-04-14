@@ -1,4 +1,4 @@
-package com.gini.validationunit.dto.request;
+package com.gini.validationunit.dto.request.part;
 
 
 import com.gini.validationunit.validation.annotation.ValidCurrency;

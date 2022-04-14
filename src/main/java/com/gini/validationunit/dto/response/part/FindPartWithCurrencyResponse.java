@@ -1,4 +1,4 @@
-package com.gini.validationunit.dto.response;
+package com.gini.validationunit.dto.response.part;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
