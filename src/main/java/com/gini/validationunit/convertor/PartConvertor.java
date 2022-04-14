@@ -1,6 +1,6 @@
 package com.gini.validationunit.convertor;
 
-import com.gini.validationunit.domaine.postgress.Part;
+import com.gini.validationunit.domaine.Part;
 import com.gini.validationunit.dto.response.part.FindPartWithCurrencyResponse;
 import com.gini.validationunit.dto.response.part.PartWishResponse;
 import lombok.experimental.UtilityClass;

@@ -1,6 +1,6 @@
 package com.gini.validationunit.repository.user;
 
-import com.gini.validationunit.domaine.postgress.User;
+import com.gini.validationunit.domaine.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;

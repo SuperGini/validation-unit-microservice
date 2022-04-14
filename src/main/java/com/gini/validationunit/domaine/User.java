@@ -1,4 +1,4 @@
-package com.gini.validationunit.domaine.postgress;
+package com.gini.validationunit.domaine;
 
 import lombok.Getter;
 import lombok.Setter;

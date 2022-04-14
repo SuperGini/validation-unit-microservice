@@ -1,6 +1,7 @@
 package com.gini.validationunit.service.feign;
 
 
+import com.gini.validationunit.config.feign.FeignClientConfiguration;
 import com.gini.validationunit.dto.request.part.PartRequest;
 import com.gini.validationunit.dto.request.part.UpdatePartRequest;
 import com.gini.validationunit.dto.response.part.FindPartWithCurrencyResponse;

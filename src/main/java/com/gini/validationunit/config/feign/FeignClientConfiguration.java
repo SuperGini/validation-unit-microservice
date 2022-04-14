@@ -1,4 +1,4 @@
-package com.gini.validationunit.service.feign;
+package com.gini.validationunit.config.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Logger;
@@ -20,7 +20,7 @@ public record FeignClientConfiguration(
 
     @Bean
     public ErrorDecoder errorDecoder(){
-        return new CustomErrorDecoder(objectMapper);
+        return new FeignErrorDecoder(objectMapper);
     }
 
     @Bean

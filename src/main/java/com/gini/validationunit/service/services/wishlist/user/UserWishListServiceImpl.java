@@ -1,7 +1,7 @@
 package com.gini.validationunit.service.services.wishlist.user;
 
 import com.gini.validationunit.convertor.UserConvertor;
-import com.gini.validationunit.domaine.postgress.User;
+import com.gini.validationunit.domaine.User;
 import com.gini.validationunit.dto.request.user.UserRequest;
 import com.gini.validationunit.dto.response.user.UserResponse;
 import com.gini.validationunit.errors.exception.UserAlreadyExistsException;

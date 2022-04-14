@@ -5,6 +5,7 @@ import com.gini.validationunit.errors.ErrorCode;
 import com.gini.validationunit.errors.ErrorResponse;
 import com.gini.validationunit.errors.exception.InventoryClientException;
 import com.gini.validationunit.errors.exception.InventoryServerException;
+import com.gini.validationunit.errors.exception.PartAlreadyInWishlist;
 import com.gini.validationunit.errors.exception.UserAlreadyExistsException;
 import com.gini.validationunit.errors.exception.UserNotFoundException;
 import com.gini.validationunit.errors.response.RestErrorResponse;
@@ -67,6 +68,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         RestErrorResponse response = new RestErrorResponse(
                 ErrorCode.USER_ALREADY_EXISTS.toString(),
                 ErrorCode.USER_ALREADY_EXISTS.getMessage(),
+                List.of()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PartAlreadyInWishlist.class)
+    public ResponseEntity<RestErrorResponse> handlePartAlreadyInWishlist(PartAlreadyInWishlist e){
+        log.error("Error part already in wishlist: ", e);
+        RestErrorResponse response = new RestErrorResponse(
+                ErrorCode.PART_IS_IN_WISHLIST.toString(),
+                ErrorCode.PART_IS_IN_WISHLIST.getMessage(),
                 List.of()
         );
 

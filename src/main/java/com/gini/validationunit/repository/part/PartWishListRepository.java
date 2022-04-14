@@ -1,6 +1,6 @@
 package com.gini.validationunit.repository.part;
 
-import com.gini.validationunit.domaine.postgress.Part;
+import com.gini.validationunit.domaine.Part;
 
 import java.util.Optional;
 import java.util.Set;

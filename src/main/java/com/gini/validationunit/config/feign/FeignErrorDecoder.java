@@ -1,4 +1,4 @@
-package com.gini.validationunit.service.feign;
+package com.gini.validationunit.config.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gini.validationunit.errors.exception.InventoryClientException;
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import static feign.FeignException.errorStatus;
 
 @Slf4j
-public record CustomErrorDecoder(ObjectMapper objectMapper) implements ErrorDecoder {
+public record FeignErrorDecoder(ObjectMapper objectMapper) implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {

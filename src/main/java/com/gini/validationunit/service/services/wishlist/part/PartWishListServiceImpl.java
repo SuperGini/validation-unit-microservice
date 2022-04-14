@@ -1,9 +1,10 @@
 package com.gini.validationunit.service.services.wishlist.part;
 
 import com.gini.validationunit.convertor.PartConvertor;
-import com.gini.validationunit.domaine.postgress.Part;
-import com.gini.validationunit.domaine.postgress.User;
+import com.gini.validationunit.domaine.Part;
+import com.gini.validationunit.domaine.User;
 import com.gini.validationunit.dto.response.part.PartWishResponse;
+import com.gini.validationunit.errors.exception.PartAlreadyInWishlist;
 import com.gini.validationunit.errors.exception.UserNotFoundException;
 import com.gini.validationunit.repository.part.PartWishListRepository;
 import com.gini.validationunit.repository.user.UserWishListRepository;
@@ -60,7 +61,7 @@ public class PartWishListServiceImpl implements PartWishListService{
 
     private void checkIfPArtIsInWishList(String partNumber, String username) {
         partWishListRepository.findPartNumber(username, partNumber)
-                .ifPresent(x -> {throw new RuntimeException("part already added to wishlist");});
+                .ifPresent(x -> {throw new PartAlreadyInWishlist("part already added to wishlist");});
     }
 
 
