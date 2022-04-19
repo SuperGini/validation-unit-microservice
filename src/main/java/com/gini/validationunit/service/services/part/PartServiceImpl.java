@@ -40,6 +40,11 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
+    public FindPartWithCurrencyResponse updatePartPrice(String partNumber, String partPrice){
+        return feignClientCentralUnit.updatePartPrice(partNumber, partPrice).getBody();
+    }
+
+    @Override
     public FindPartWithCurrencyResponse findPartByPartNumber(String partNumber) {
 
 

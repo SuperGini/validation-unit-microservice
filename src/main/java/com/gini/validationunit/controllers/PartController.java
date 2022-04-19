@@ -64,8 +64,16 @@ public class PartController {
     @GetMapping("/parts/part/{partNumber}")
     public ResponseEntity<FindPartWithCurrencyResponse> findPartByPartNumber(@PathVariable String partNumber) {
         return ResponseEntity
+                            .ok()
+                                .body(partService.findPartByPartNumber(partNumber));
+
+    }
+
+    @PutMapping("/parts/part/{partNumber}/{partPrice}")
+    public ResponseEntity<FindPartWithCurrencyResponse> updatePartPrice(@PathVariable String partNumber, @PathVariable String partPrice ){
+        return ResponseEntity
                 .ok()
-                .body(partService.findPartByPartNumber(partNumber));
+                .body(partService.updatePartPrice(partNumber, partPrice));
 
     }
 }

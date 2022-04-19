@@ -17,5 +17,7 @@ public interface PartService {
 
     Integer updatePart(UpdatePartRequest updatePartRequest);
 
+    FindPartWithCurrencyResponse updatePartPrice(String partNumber, String partPrice);
+
     FindPartWithCurrencyResponse findPartByPartNumber(String partNumber);
 }
