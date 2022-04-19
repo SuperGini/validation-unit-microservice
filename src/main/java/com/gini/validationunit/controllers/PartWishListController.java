@@ -1,7 +1,7 @@
 package com.gini.validationunit.controllers;
 
 import com.gini.validationunit.dto.response.part.PartWishResponse;
-import com.gini.validationunit.service.services.wishlist.part.PartWishListService;
+import com.gini.validationunit.service.services.postgres.part.PartWishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("/v1")
 public class PartWishListController {
-
 
     private final PartWishListService partWishListService;
 

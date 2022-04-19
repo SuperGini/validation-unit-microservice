@@ -27,21 +27,20 @@ public class PriceValidation implements ConstraintValidator<ValidPrice, PriceReq
             return false;
         }
 
-        if(partPrice.compareTo(BigDecimal.ZERO) <= 0){
+        if (partPrice.compareTo(BigDecimal.ZERO) <= 0) {
             setViolationConstraintMessage(context, "Price must not be zero or lower");
             return false;
         }
 
-        if(AcceptedCurrency.getCurrenciesList().contains(priceRequest.getCurrency())){
+        if (AcceptedCurrency.getCurrenciesList().contains(priceRequest.getCurrency())) {
             CurrencyUnit currency = Monetary.getCurrency(priceRequest.getCurrency());
 
-            int currencyDigits =  currency.getDefaultFractionDigits();
+            int currencyDigits = currency.getDefaultFractionDigits();
 
-            if(partPrice.scale() > currencyDigits){
-                setViolationConstraintMessage(context,"no more thant 2 decimals are accepted");
+            if (partPrice.scale() > currencyDigits) {
+                setViolationConstraintMessage(context, "no more thant 2 decimals are accepted");
                 return false;
             }
-
         }
 
         return true;

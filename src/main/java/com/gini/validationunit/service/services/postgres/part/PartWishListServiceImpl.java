@@ -1,5 +1,6 @@
-package com.gini.validationunit.service.services.wishlist.part;
+package com.gini.validationunit.service.services.postgres.part;
 
+import com.gini.avro.data.PartPriceUpdateWithCurrency;
 import com.gini.validationunit.convertor.PartConvertor;
 import com.gini.validationunit.domaine.Part;
 import com.gini.validationunit.domaine.User;
@@ -10,12 +11,15 @@ import com.gini.validationunit.repository.part.PartWishListRepository;
 import com.gini.validationunit.repository.user.UserWishListRepository;
 import com.gini.validationunit.service.PartService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PartWishListServiceImpl implements PartWishListService{
@@ -57,6 +61,18 @@ public class PartWishListServiceImpl implements PartWishListService{
                     .stream()
                     .map(PartConvertor::convertToPartWishResponse)
                     .collect(Collectors.toSet());
+    }
+
+    @Override
+    @Transactional
+    public int updateAllPartPrices(PartPriceUpdateWithCurrency part){
+        var priceEUR = new BigDecimal(part.getPriceEURO());
+        var priceUSD = new BigDecimal(part.getPriceUSD());
+        var priceRON = new BigDecimal(part.getPriceRON());
+
+        return partWishListRepository
+                .updatePricesOfPart(priceEUR, priceUSD, priceRON, part.getPartNumber());
+
     }
 
     private void checkIfPArtIsInWishList(String partNumber, String username) {

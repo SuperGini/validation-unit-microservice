@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,6 +54,24 @@ public class PartWishListRepositoryImpl implements PartWishListRepository {
                 .setParameter("username", username)
                 .getResultStream()
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public int updatePricesOfPart(BigDecimal priceEURO, BigDecimal priceUSD, BigDecimal priceRON, String partNumber){
+
+        String jpql= """
+                UPDATE Part p SET
+                    p.priceEURO =:priceEURO, p.priceUSD =:priceUSD, p.priceRON =:priceRON
+                WHERE p.partNumber =:partNumber
+                """;
+
+        return entityManager.createQuery(jpql)
+                .setParameter("priceEURO", priceEURO)
+                .setParameter("priceUSD", priceUSD)
+                .setParameter("priceRON", priceRON)
+                .setParameter("partNumber", partNumber)
+                .executeUpdate();
+
     }
 
 

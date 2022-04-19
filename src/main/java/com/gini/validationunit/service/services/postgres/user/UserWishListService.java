@@ -1,4 +1,4 @@
-package com.gini.validationunit.service.services.wishlist.user;
+package com.gini.validationunit.service.services.postgres.user;
 
 import com.gini.validationunit.dto.request.user.UserRequest;
 import com.gini.validationunit.dto.response.user.UserResponse;

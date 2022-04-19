@@ -1,5 +1,6 @@
-package com.gini.validationunit.service.services.wishlist.part;
+package com.gini.validationunit.service.services.postgres.part;
 
+import com.gini.avro.data.PartPriceUpdateWithCurrency;
 import com.gini.validationunit.dto.response.part.PartWishResponse;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,4 +11,7 @@ public interface PartWishListService {
     PartWishResponse addPartToWishlist(String partNumber, String username);
 
     Set<PartWishResponse> findAllPatsForUser(String username);
+
+    @Transactional
+    int updateAllPartPrices(PartPriceUpdateWithCurrency part);
 }

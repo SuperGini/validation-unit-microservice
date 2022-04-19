@@ -2,7 +2,7 @@ package com.gini.validationunit.controllers;
 
 import com.gini.validationunit.dto.request.user.UserRequest;
 import com.gini.validationunit.dto.response.user.UserResponse;
-import com.gini.validationunit.service.services.wishlist.user.UserWishListService;
+import com.gini.validationunit.service.services.postgres.user.UserWishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
