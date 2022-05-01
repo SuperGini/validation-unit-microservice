@@ -1,5 +1,7 @@
 package com.gini.validationunit.config.security;
 
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,19 +14,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Setter
 @Configuration
+@ConfigurationProperties(prefix = "jwt.token.validation")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private String uri;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .oauth2ResourceServer(
                         jwt -> jwt.jwt()
-                                .jwkSetUri("http://localhost:8080/realms/gini-project/protocol/openid-connect/certs")
+                                .jwkSetUri(uri)
                                 .jwtAuthenticationConverter(jwtConverter())
                 );
-
         http
                 .authorizeRequests()
                 .mvcMatchers("/v1/parts/**").hasAnyRole("MANAGER", "USER")
@@ -32,12 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/v1/users").hasAnyRole("MANAGER")
                 .anyRequest()
                 .authenticated();
-
         http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
     }
+
 
     @Bean
     public JwtAuthenticationConverter jwtConverter() {

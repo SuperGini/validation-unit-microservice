@@ -132,7 +132,16 @@
             <scope>test</scope>
         </dependency>
         <!--necesare pentru KAFKA ........................................................................................   -->
+
+<!--        SCANS FOR @ConfigurationProperties-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
+
+
 
     <!--ca sa ia niste dependinte pt KAFKA atentie -> https-->
     <repositories>
