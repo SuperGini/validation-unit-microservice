@@ -28,7 +28,7 @@ public class PartController {
     private final PartService partService;
 
 
-    @PostMapping("/parts")
+    @PostMapping("/x/parts")
     public ResponseEntity<PartResponse> createPart(@Valid @RequestBody PartRequest partRequest) {
 
         PartResponse response = partService.createPart(partRequest);
@@ -54,7 +54,7 @@ public class PartController {
     }
 
 
-    @PutMapping("/parts")
+    @PutMapping("/x/parts")
     public ResponseEntity<?> updatePart(@RequestBody UpdatePartRequest updatePartRequest) {
         Integer ok = partService.updatePart(updatePartRequest);
         return ResponseEntity.ok().body(ok);
