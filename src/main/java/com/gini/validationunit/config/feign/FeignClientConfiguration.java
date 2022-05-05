@@ -3,7 +3,10 @@ package com.gini.validationunit.config.feign;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Logger;
 import feign.Request;
+import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.TimeUnit;
@@ -11,9 +14,18 @@ import java.util.concurrent.TimeUnit;
 /**
  * Feign will treat any 3xx status as errors -> bug
  **/
-public record FeignClientConfiguration(
-        ObjectMapper objectMapper
-) {
+@RequiredArgsConstructor
+public class FeignClientConfiguration {
+
+    @Value("${basic.auth.username}")
+    private String username;
+
+    @Value("${basic.auth.password}")
+    private String password;
+
+
+
+    private final ObjectMapper objectMapper;
 
     private static final int CONNECT_TIMOUT = 15;
     private static final int READ_TIMEOUT = 15;
@@ -32,7 +44,13 @@ public record FeignClientConfiguration(
     }
 
     @Bean
-    Logger.Level feignLoggerLevel() {
+    public Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
     }
+
+    @Bean
+    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+        return new BasicAuthRequestInterceptor(username, password);
+    }
+
 }

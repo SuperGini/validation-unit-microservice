@@ -72,8 +72,8 @@ public class PartController {
     @PutMapping("/parts/part/{partNumber}/{partPrice}")
     public ResponseEntity<FindPartWithCurrencyResponse> updatePartPrice(@PathVariable String partNumber, @PathVariable String partPrice ){
         return ResponseEntity
-                .ok()
-                .body(partService.updatePartPrice(partNumber, partPrice));
+                            .ok()
+                                .body(partService.updatePartPrice(partNumber, partPrice));
 
     }
 }
