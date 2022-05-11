@@ -48,9 +48,9 @@ public class FeignClientConfiguration {
         return Logger.Level.FULL;
     }
 
-    @Bean
-    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
-        return new BasicAuthRequestInterceptor(username, password);
-    }
+//    @Bean
+//    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+//        return new BasicAuthRequestInterceptor(username, password);
+//    }
 
 }

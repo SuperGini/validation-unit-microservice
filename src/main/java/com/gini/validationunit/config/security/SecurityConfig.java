@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthenticationConverter jwtConverter() {
         var converter = new JwtAuthenticationConverter();
-
         converter.setJwtGrantedAuthoritiesConverter(
                 jwt -> {
                     Map<String, List<String>> keycloakRealmAccess = (Map<String, List<String>>) jwt.getClaims().get("realm_access");
